@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TravelMate | Plan Your Next Adventure - Modern Travel Planner</title>
+  <meta name="description" content="Plan, organize, and track your dream travel itineraries and budgets with TravelMate. Explore top destinations across India with smart itineraries.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <!-- Injected dynamically by navbar.js -->
+        <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-badge">Discover India &amp; Beyond</span>
+        <h1 class="hero-title">Plan Your Next Adventure</h1>
+        <p class="hero-subtitle">
+          Turn your travel dreams into stress-free reality. Explore breathtaking Indian destinations,
+          generate smart day-by-day itineraries, and master your trip budget with TravelMate.
+        </p>
+
+        <div class="hero-actions">
+          <a href="create-trip.html" class="btn btn-primary btn-lg">Plan a Trip</a>
+          <a href="destinations.html" class="btn btn-secondary btn-lg">Explore Destinations</a>
+        </div>
+
+        <!-- Quick Destination Search Widget -->
+        <div class="hero-search-box">
+          <div class="search-field">
+            <label for="quick-dest-input">Where to?</label>
+            <input type="text" id="quick-dest-input" placeholder="e.g. Goa, Manali, Kerala, Jaipur...">
+          </div>
+          <div class="search-field">
+            <label for="quick-type-select">Travel Preference</label>
+            <select id="quick-type-select">
+              <option value="">All Categories</option>
+              <option value="Beach">Beach &amp; Coastal</option>
+              <option value="Hill Station">Hill Stations</option>
+              <option value="Heritage">Heritage &amp; Palaces</option>
+              <option value="Adventure">Adventure &amp; Trekking</option>
+              <option value="Nature">Nature &amp; Backwaters</option>
+              <option value="Spiritual">Spiritual &amp; Temples</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>&nbsp;</label>
+            <button id="quick-search-btn" class="btn btn-teal btn-block">Find Destinations</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Banner -->
+  <div class="container">
+    <div class="stats-banner">
+      <div class="stat-item">
+        <h3>50+</h3>
+        <p>Curated Destinations</p>
+      </div>
+      <div class="stat-item">
+        <h3>100%</h3>
+        <p>Free &amp; Customizable</p>
+      </div>
+      <div class="stat-item">
+        <h3>10,000+</h3>
+        <p>Trips Organized</p>
+      </div>
+      <div class="stat-item">
+        <h3>4.9 ★</h3>
+        <p>Traveler Satisfaction</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Destinations Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-tag">Featured Destinations</span>
+          <h2 class="section-title">Popular Indian Escapes</h2>
+          <p class="section-desc">Hand-picked destinations with realistic budget estimates, top attractions, and prime travel seasons.</p>
+        </div>
+        <a href="destinations.html" class="btn btn-outline">View All Destinations →</a>
+      </div>
+
+      <div class="destinations-grid" id="popular-destinations-grid">
+        <!-- Rendered dynamically by home.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+          <p class="text-muted">Loading featured destinations...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How TravelMate Works / Features -->
+  <section class="section" style="background: var(--bg-subtle);">
+    <div class="container">
+      <div class="section-header text-center" style="max-width: 680px; margin: 0 auto 50px;">
+        <span class="section-tag">Smart Features</span>
+        <h2 class="section-title">Everything You Need for Effortless Journeys</h2>
+        <p class="section-desc" style="margin: 8px auto 0;">Say goodbye to disorganized spreadsheets and scattered notes. TravelMate integrates every step of your trip planning.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">🗺️</div>
+          <h3>Smart Itinerary Generator</h3>
+          <p>Generate balanced day-by-day itineraries tailored to your destination, duration, and personal travel style. Easily customize, add, or edit activities anytime.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">💰</div>
+          <h3>Dynamic Budget Calculator</h3>
+          <p>Break down travel costs across transport, hotels, meals, sightseeing, and shopping. Compare estimated allocations against actual spending in real time.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">✨</div>
+          <h3>Personal Trips Dashboard</h3>
+          <p>Access and manage all your upcoming, active, and completed journeys in one secure personal hub. Your private trips are protected and accessible only to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="section">
+    <div class="container">
+      <div style="background: var(--primary-gradient); color: white; border-radius: var(--radius-lg); padding: 50px 40px; text-align: center; box-shadow: var(--shadow-lg);">
+        <h2 style="color: white; font-size: 2.4rem; margin-bottom: 14px;">Ready to Start Your Journey?</h2>
+        <p style="font-size: 1.1rem; opacity: 0.95; max-width: 600px; margin: 0 auto 30px;">
+          Create your personalized travel itinerary in under 2 minutes. Free forever, no credit card required.
+        </p>
+        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+          <a href="create-trip.html" class="btn btn-secondary btn-lg" style="background: white; color: var(--primary); font-weight: 700;">Plan a Trip Now</a>
+          <a href="destinations.html" class="btn btn-outline btn-lg" style="border-color: white; color: white;">Browse Destinations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-logo" style="color: white; margin-bottom: 14px;">
+            <div class="logo-icon">✈</div>
+            <span>Travel<span class="logo-highlight" style="color: #38bdf8;">Mate</span></span>
+          </div>
+          <p>
+            TravelMate is an academic full-stack travel planner designed to help wanderers discover destinations, organize itineraries, and manage budgets seamlessly.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="destinations.html">Explore Destinations</a></li>
+            <li><a href="create-trip.html">Create a Trip</a></li>
+            <li><a href="my-trips.html">My Trips</a></li>
+            <li><a href="about.html">About &amp; Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Top Destinations</h4>
+          <ul class="footer-links">
+            <li><a href="destinations.html?type=Beach">Goa Beaches</a></li>
+            <li><a href="destinations.html?type=Hill%20Station">Manali &amp; Ooty</a></li>
+            <li><a href="destinations.html?type=Heritage">Jaipur &amp; Agra</a></li>
+            <li><a href="destinations.html?type=Nature">Kerala Backwaters</a></li>
+            <li><a href="destinations.html?type=Spiritual">Varanasi Ghats</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Demo Account</h4>
+          <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px;">College demonstration ready:</p>
+          <p style="font-size: 0.88rem; color: #e2e8f0;">Email: <strong>demo@travelmate.com</strong></p>
+          <p style="font-size: 0.88rem; color: #e2e8f0;">Password: <strong>password123</strong></p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 TravelMate. All rights reserved. Built with Java, Spring Boot, MySQL, and Vanilla Web Technologies.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

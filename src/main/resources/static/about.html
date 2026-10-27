@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About &amp; Contact | TravelMate - Full-Stack Travel Planner</title>
+  <meta name="description" content="Learn about TravelMate's mission and architecture, and get in touch with our team with questions or feedback.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link">My Trips</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <!-- Injected dynamically by navbar.js -->
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section style="background: white; border-bottom: 1px solid var(--border-color); padding: 40px 0 26px;">
+    <div class="container">
+      <span class="section-tag">About TravelMate</span>
+      <h1 style="font-size: 2.3rem; margin-top: 6px;">Empowering Modern Travelers</h1>
+      <p class="text-muted" style="margin-top: 6px; max-width: 680px;">
+        Designed as an academic full-stack software engineering project, TravelMate solves the chaos of travel planning with clean architecture, smart day-by-day itineraries, and dynamic financial tracking.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content: About Story & Contact Form -->
+  <main class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: flex-start;">
+
+        <!-- Left: Project Story & Architecture -->
+        <div>
+          <div style="background: white; border-radius: var(--radius-md); padding: 32px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 24px;">
+            <h2 style="font-size: 1.45rem; margin-bottom: 14px; color: var(--primary-dark);">🎯 Our Purpose &amp; Vision</h2>
+            <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">
+              Travel planning is often fragmented across multiple tabs, messy spreadsheets, and forgotten notes. <strong>TravelMate</strong> was developed to unify every aspect of journey planning into one elegant, user-friendly system.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 16px;">
+              Whether embarking on a coastal getaway to Goa, a scenic trek in Manali, or a heritage tour across Rajasthan, travelers can establish clear daily itineraries, allocate budget categories, and compare actual expenses against initial estimates in real time.
+            </p>
+          </div>
+
+          <div style="background: white; border-radius: var(--radius-md); padding: 32px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+            <h2 style="font-size: 1.45rem; margin-bottom: 14px; color: var(--secondary);">💻 Technical Architecture</h2>
+            <ul style="list-style: none; padding-left: 0; display: flex; flex-direction: column; gap: 12px; color: var(--text-muted); font-size: 0.95rem;">
+              <li style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="color: var(--primary); font-weight: 700;">☕ Backend:</span>
+                <span>Java 17+, Spring Boot 3, Spring Data JPA, Spring Security Crypto (BCrypt), REST APIs.</span>
+              </li>
+              <li style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="color: var(--secondary); font-weight: 700;">🐬 Database:</span>
+                <span>MySQL relational schema with Foreign Keys, indexed queries, and H2 test profile.</span>
+              </li>
+              <li style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="color: var(--accent); font-weight: 700;">🎨 Frontend:</span>
+                <span>Semantic HTML5, Vanilla CSS3 (Custom Design System), JavaScript (Fetch API &amp; DOM manipulation).</span>
+              </li>
+              <li style="display: flex; gap: 10px; align-items: flex-start;">
+                <span style="color: var(--primary-dark); font-weight: 700;">🔒 Security:</span>
+                <span>Session-based authentication, user-scoped data isolation (users cannot access other users' private trips).</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div style="background: white; border-radius: var(--radius-md); padding: 36px; border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+          <div style="margin-bottom: 24px;">
+            <span class="section-tag">Get in Touch</span>
+            <h2 style="font-size: 1.6rem; margin-top: 6px;">Contact the TravelMate Team</h2>
+            <p class="text-muted" style="font-size: 0.9rem; margin-top: 4px;">Have questions, feedback, or suggestions? Send us a message and our team will get back to you.</p>
+          </div>
+
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="contact-name">Your Name <span class="req">*</span></label>
+              <input type="text" id="contact-name" class="form-control" placeholder="e.g. Ananya Sen" required>
+              <div class="invalid-feedback" id="contact-name-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email">Email Address <span class="req">*</span></label>
+              <input type="email" id="contact-email" class="form-control" placeholder="name@example.com" required>
+              <div class="invalid-feedback" id="contact-email-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-subject">Subject</label>
+              <input type="text" id="contact-subject" class="form-control" placeholder="e.g. Suggestion for new destination">
+            </div>
+
+            <div class="form-group">
+              <label for="contact-message">Message <span class="req">*</span></label>
+              <textarea id="contact-message" class="form-control" rows="4" placeholder="Write your message here (min. 10 characters)..." required></textarea>
+              <div class="invalid-feedback" id="contact-message-error"></div>
+            </div>
+
+            <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-block btn-lg" style="margin-top: 10px;">
+              <span id="contact-btn-text">Send Message</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 TravelMate. All rights reserved. Plain HTML, CSS, JavaScript &amp; Spring Boot Architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/about.js"></script>
+</body>
+</html>

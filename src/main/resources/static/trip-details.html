@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Details &amp; Itinerary | TravelMate</title>
+  <meta name="description" content="Manage your day-by-day trip itinerary, customize morning/afternoon/evening activities, and track travel expenses dynamically.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link active">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <!-- Injected dynamically by navbar.js -->
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Trip Header Banner -->
+  <section class="section" style="padding-top: 30px; padding-bottom: 20px;">
+    <div class="container">
+      <div style="margin-bottom: 16px;">
+        <a href="my-trips.html" style="font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px;">
+          ← Back to My Trips
+        </a>
+      </div>
+
+      <div class="trip-banner" id="trip-banner-container">
+        <!-- Rendered dynamically -->
+        <div style="text-align: center; padding: 30px 0;">
+          <p>Loading trip details...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace: Tabs for Itinerary & Budget -->
+  <main class="section" style="padding-top: 10px;">
+    <div class="container">
+
+      <!-- View Switcher Tabs -->
+      <div class="tab-nav">
+        <button class="tab-btn active" id="tab-btn-itinerary">📅 Day-by-Day Itinerary</button>
+        <button class="tab-btn" id="tab-btn-budget">💰 Budget &amp; Expense Calculator</button>
+      </div>
+
+      <!-- ================= ITINERARY VIEW ================= -->
+      <section id="itinerary-view">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <h2 style="font-size: 1.5rem;">Itinerary Timeline</h2>
+            <p class="text-muted" style="font-size: 0.9rem;">Review and customize your planned activities for each day of the journey.</p>
+          </div>
+          <button class="btn btn-primary btn-sm" id="btn-open-add-activity">+ Add Activity</button>
+        </div>
+
+        <div id="itinerary-days-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </section>
+
+      <!-- ================= BUDGET VIEW ================= -->
+      <section id="budget-view" style="display: none;">
+        <div class="budget-overview-card">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <h2 style="font-size: 1.5rem;">Trip Budget &amp; Expenses Breakdown</h2>
+              <p class="text-muted" style="font-size: 0.9rem;">
+                Keep tabs on actual spending versus estimated allocations across all travel categories.
+              </p>
+            </div>
+            <button class="btn btn-teal btn-sm" id="btn-open-add-expense">+ Add Expense Item</button>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="budget-progress-container">
+            <div class="progress-labels">
+              <span id="budget-progress-status">Spending Progress</span>
+              <span id="budget-progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="budget-progress-bar" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Expense Breakdown Table -->
+          <div style="overflow-x: auto;">
+            <table class="expense-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Description</th>
+                  <th>Estimated Amount</th>
+                  <th>Actual Amount Spent</th>
+                  <th>Variance</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="expense-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Add/Edit Activity Modal -->
+  <div class="modal-overlay" id="activity-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="activity-modal-title">Add Activity</h3>
+        <button class="modal-close-btn" id="activity-modal-close">✕</button>
+      </div>
+      <form id="activity-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="activity-edit-id">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="activity-day">Day Number <span class="req">*</span></label>
+              <input type="number" id="activity-day" class="form-control" min="1" max="30" value="1" required>
+              <div class="invalid-feedback" id="activity-day-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="activity-time">Time of Day <span class="req">*</span></label>
+              <select id="activity-time" class="form-control" required>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Evening">Evening</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="activity-name">Activity / Place Name <span class="req">*</span></label>
+            <input type="text" id="activity-name" class="form-control" placeholder="e.g. Visit Amber Fort & Mirror Palace" required maxlength="200">
+            <div class="invalid-feedback" id="activity-name-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="activity-desc">Activity Description &amp; Tips</label>
+            <textarea id="activity-desc" class="form-control" rows="3" placeholder="Brief details, timings, dress codes, or notes..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="activity-cost">Estimated Cost in INR (₹)</label>
+            <input type="number" id="activity-cost" class="form-control" min="0" step="50" placeholder="e.g. 500" value="0">
+            <div class="invalid-feedback" id="activity-cost-error"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="activity-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="activity-modal-submit">Save Activity</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add/Edit Expense Modal -->
+  <div class="modal-overlay" id="expense-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="expense-modal-title">Add Expense</h3>
+        <button class="modal-close-btn" id="expense-modal-close">✕</button>
+      </div>
+      <form id="expense-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="expense-edit-id">
+
+          <div class="form-group">
+            <label for="expense-category">Category <span class="req">*</span></label>
+            <select id="expense-category" class="form-control" required>
+              <option value="Transportation">Transportation (Flights, Train, Cab)</option>
+              <option value="Accommodation">Accommodation (Hotel, Resort, Hostel)</option>
+              <option value="Food">Food &amp; Dining (Meals, Snacks, Drinks)</option>
+              <option value="Sightseeing and activities">Sightseeing &amp; Activities</option>
+              <option value="Shopping and miscellaneous">Shopping &amp; Miscellaneous</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="expense-desc">Description</label>
+            <input type="text" id="expense-desc" class="form-control" placeholder="e.g. Train tickets from Mumbai, 4-star hotel stay...">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expense-estimated">Estimated Budget (₹) <span class="req">*</span></label>
+              <input type="number" id="expense-estimated" class="form-control" min="0" step="100" placeholder="0" required>
+              <div class="invalid-feedback" id="expense-estimated-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="expense-actual">Actual Amount Spent (₹) <span class="req">*</span></label>
+              <input type="number" id="expense-actual" class="form-control" min="0" step="100" placeholder="0" required>
+              <div class="invalid-feedback" id="expense-actual-error"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="expense-modal-cancel">Cancel</button>
+          <button type="submit" class="btn btn-teal" id="expense-modal-submit">Save Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Trip Details Modal -->
+  <div class="modal-overlay" id="edit-trip-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Edit Trip Details</h3>
+        <button class="modal-close-btn" id="edit-trip-close">✕</button>
+      </div>
+      <form id="edit-trip-form" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-trip-name">Trip Name <span class="req">*</span></label>
+            <input type="text" id="edit-trip-name" class="form-control" required maxlength="150">
+            <div class="invalid-feedback" id="edit-trip-name-error"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-trip-source">Source <span class="req">*</span></label>
+              <input type="text" id="edit-trip-source" class="form-control" required>
+              <div class="invalid-feedback" id="edit-trip-source-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-trip-destination">Destination <span class="req">*</span></label>
+              <input type="text" id="edit-trip-destination" class="form-control" required>
+              <div class="invalid-feedback" id="edit-trip-destination-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-trip-departure">Departure Date <span class="req">*</span></label>
+              <input type="date" id="edit-trip-departure" class="form-control" required>
+              <div class="invalid-feedback" id="edit-trip-departure-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-trip-return">Return Date <span class="req">*</span></label>
+              <input type="date" id="edit-trip-return" class="form-control" required>
+              <div class="invalid-feedback" id="edit-trip-return-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="edit-trip-travelers">Travelers <span class="req">*</span></label>
+              <input type="number" id="edit-trip-travelers" class="form-control" min="1" required>
+              <div class="invalid-feedback" id="edit-trip-travelers-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="edit-trip-budget">Budget in INR (₹) <span class="req">*</span></label>
+              <input type="number" id="edit-trip-budget" class="form-control" min="0" required>
+              <div class="invalid-feedback" id="edit-trip-budget-error"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-trip-preference">Travel Preference</label>
+            <select id="edit-trip-preference" class="form-control">
+              <option value="Relaxation">Relaxation</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Nature">Nature</option>
+              <option value="Culture">Culture</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Food">Food</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="edit-trip-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="edit-trip-submit">Update Trip</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 TravelMate. All rights reserved. Plain HTML, CSS, JavaScript &amp; Spring Boot Architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/trip-details.js"></script>
+</body>
+</html>

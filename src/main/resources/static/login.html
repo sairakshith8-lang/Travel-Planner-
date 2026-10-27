@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | TravelMate - Access Your Trips &amp; Itineraries</title>
+  <meta name="description" content="Sign in to your TravelMate account to access and manage your private travel itineraries, budgets, and saved trips.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <a href="login.html" class="btn btn-secondary btn-sm active">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Login Form Section -->
+  <main class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div style="font-size: 2.2rem; margin-bottom: 8px;">🔐</div>
+        <h1>Welcome Back</h1>
+        <p>Log in to access your travel itineraries and budget dashboard.</p>
+      </div>
+
+      <!-- Quick Demo Credentials Box -->
+      <div style="background: var(--primary-light); border: 1px solid #bae6fd; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; font-size: 0.85rem; color: var(--primary-dark);">
+        <strong style="display: block; margin-bottom: 4px;">🚀 College Demo Credentials:</strong>
+        Email: <code>demo@travelmate.com</code> | Pass: <code>password123</code>
+        <button type="button" id="fill-demo-btn" class="btn btn-sm btn-outline" style="margin-top: 6px; padding: 3px 8px; font-size: 0.75rem; background: white;">Auto-Fill Demo</button>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email">Email Address <span class="req">*</span></label>
+          <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required autocomplete="email">
+          <div class="invalid-feedback" id="login-email-error"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Password <span class="req">*</span></label>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+          <div class="invalid-feedback" id="login-password-error"></div>
+        </div>
+
+        <button type="submit" id="login-submit-btn" class="btn btn-primary btn-block btn-lg" style="margin-top: 10px;">
+          <span id="btn-text">Sign In</span>
+        </button>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account yet? <a href="register.html" style="font-weight: 700;">Create an account</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

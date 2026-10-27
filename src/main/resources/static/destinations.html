@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Destinations | TravelMate - Discover Incredible India</title>
+  <meta name="description" content="Explore India's top travel destinations including Goa, Manali, Jaipur, Kerala, Hyderabad, Ooty, and Varanasi. Filter by budget, travel type, and season.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link active">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section style="background: white; border-bottom: 1px solid var(--border-color); padding: 40px 0 30px;">
+    <div class="container">
+      <span class="section-tag">Destination Explorer</span>
+      <h1 style="font-size: 2.4rem; margin-top: 6px;">Discover Incredible India</h1>
+      <p class="text-muted" style="margin-top: 6px; max-width: 650px;">
+        Browse curated destinations across India. Review daily cost estimates, best seasons, top attractions, and directly initialize your trip itinerary.
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Content & Filters -->
+  <main class="section">
+    <div class="container">
+      <!-- Search & Filter Controls -->
+      <div class="filter-bar">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="dest-search-input" placeholder="Search by destination name or state (e.g. Goa, Manali)...">
+        </div>
+
+        <div class="filter-selects">
+          <select id="type-filter">
+            <option value="">All Travel Types</option>
+            <option value="Beach">Beach</option>
+            <option value="Hill Station">Hill Station</option>
+            <option value="Heritage">Heritage &amp; Palaces</option>
+            <option value="Nature">Nature &amp; Backwaters</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Spiritual">Spiritual</option>
+          </select>
+
+          <select id="budget-filter">
+            <option value="">Any Daily Budget</option>
+            <option value="2500">Under ₹2,500 / day</option>
+            <option value="3000">Under ₹3,000 / day</option>
+            <option value="3500">Under ₹3,500 / day</option>
+            <option value="5000">All Budget Ranges</option>
+          </select>
+
+          <select id="sort-select">
+            <option value="recommended">Sort: Recommended</option>
+            <option value="cost-asc">Cost: Low to High</option>
+            <option value="cost-desc">Cost: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+          </select>
+
+          <button id="reset-filters-btn" class="btn btn-secondary btn-sm" title="Reset all filters">Reset</button>
+        </div>
+      </div>
+
+      <!-- Result Count Info -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <p class="text-muted" id="results-count-text">Showing destinations...</p>
+        <span style="font-size: 0.8rem; color: var(--text-light);">* All figures are estimated costs per person per day</span>
+      </div>
+
+      <!-- Destinations Grid -->
+      <div class="destinations-grid" id="destinations-display-grid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px;">
+          <p class="text-muted">Loading destinations catalog...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 TravelMate. All rights reserved. Plain HTML, CSS, JavaScript &amp; Spring Boot Architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/destinations.js"></script>
+</body>
+</html>

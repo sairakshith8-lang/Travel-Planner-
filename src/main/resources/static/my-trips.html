@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Trips Dashboard | TravelMate - Manage Your Journeys</title>
+  <meta name="description" content="View, organize, and manage your personalized travel plans, itineraries, and trip expenses in your private TravelMate dashboard.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link active">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <!-- navbar.js will populate user menu -->
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Page Header & Action Bar -->
+  <section style="background: white; border-bottom: 1px solid var(--border-color); padding: 36px 0 20px;">
+    <div class="container">
+      <div class="dashboard-header">
+        <div>
+          <span class="section-tag">User Dashboard</span>
+          <h1 style="font-size: 2.2rem; margin-top: 6px;" id="dashboard-title">My Travel Plans</h1>
+          <p class="text-muted" style="margin-top: 4px;">Track upcoming itineraries, monitor estimated budgets, and review past adventures.</p>
+        </div>
+
+        <a href="create-trip.html" class="btn btn-primary btn-lg">+ Plan a New Trip</a>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="tab-nav">
+        <button class="tab-btn active" data-filter="all">All Trips</button>
+        <button class="tab-btn" data-filter="upcoming">Upcoming</button>
+        <button class="tab-btn" data-filter="completed">Completed</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trips Grid & Content -->
+  <main class="section">
+    <div class="container">
+      <div class="trips-grid" id="trips-container">
+        <!-- Rendered dynamically by my-trips.js -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 60px;">
+          <p class="text-muted">Loading your travel dashboard...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Delete Trip</h3>
+        <button class="modal-close-btn" id="cancel-delete-x">✕</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete <strong id="delete-trip-title">this trip</strong>?</p>
+        <p class="text-muted" style="font-size: 0.88rem; margin-top: 8px;">
+          This will permanently remove the trip, including its day-by-day itinerary and all recorded expenses. This action cannot be undone.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete-btn">Delete Trip</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 TravelMate. All rights reserved. Plain HTML, CSS, JavaScript &amp; Spring Boot Architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/my-trips.js"></script>
+</body>
+</html>

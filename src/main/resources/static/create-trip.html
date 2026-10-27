@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a Trip | TravelMate - Build Your Personalized Itinerary</title>
+  <meta name="description" content="Plan your trip with TravelMate. Set destinations, travel dates, travelers, budget in Indian rupees, and generate smart day-by-day itineraries.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">✈</div>
+        <span>Travel<span class="logo-highlight">Mate</span></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="destinations.html" class="nav-link">Explore</a></li>
+        <li><a href="my-trips.html" class="nav-link">My Trips</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="nav-auth" id="nav-auth-slot">
+        <a href="login.html" class="btn btn-secondary btn-sm">Login</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+
+      <button class="nav-toggle-btn" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section style="background: white; border-bottom: 1px solid var(--border-color); padding: 36px 0 24px;">
+    <div class="container container-narrow">
+      <span class="section-tag">Trip Planner</span>
+      <h1 style="font-size: 2.2rem; margin-top: 6px;">Plan a New Adventure</h1>
+      <p class="text-muted" style="margin-top: 6px;">
+        Fill in your journey details below. TravelMate will automatically generate a tailored day-by-day itinerary and realistic budget allocation for your trip.
+      </p>
+    </div>
+  </section>
+
+  <!-- Trip Creation Form -->
+  <main class="section">
+    <div class="container container-narrow">
+      <div style="background: white; border-radius: var(--radius-lg); padding: 36px; border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+        
+        <form id="create-trip-form" novalidate>
+
+          <!-- Trip Name -->
+          <div class="form-group">
+            <label for="trip-name">Trip Name <span class="req">*</span></label>
+            <input type="text" id="trip-name" class="form-control" placeholder="e.g. Goa Beach Holiday with Friends" required maxlength="150">
+            <div class="invalid-feedback" id="trip-name-error"></div>
+          </div>
+
+          <!-- Source & Destination -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="trip-source">Starting Location (From) <span class="req">*</span></label>
+              <input type="text" id="trip-source" class="form-control" placeholder="e.g. Mumbai, Delhi, Bangalore..." required>
+              <div class="invalid-feedback" id="trip-source-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="trip-destination">Destination (To) <span class="req">*</span></label>
+              <input type="text" id="trip-destination" class="form-control" placeholder="e.g. Goa, Manali, Jaipur..." required list="destinations-datalist">
+              <datalist id="destinations-datalist">
+                <option value="Goa">
+                <option value="Manali">
+                <option value="Jaipur">
+                <option value="Kerala (Alleppey)">
+                <option value="Hyderabad">
+                <option value="Ooty">
+                <option value="Varanasi">
+                <option value="Rishikesh">
+                <option value="Agra">
+                <option value="Udaipur">
+              </datalist>
+              <div class="invalid-feedback" id="trip-destination-error"></div>
+            </div>
+          </div>
+
+          <!-- Travel Dates -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="trip-departure">Departure Date <span class="req">*</span></label>
+              <input type="date" id="trip-departure" class="form-control" required>
+              <div class="invalid-feedback" id="trip-departure-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="trip-return">Return Date <span class="req">*</span></label>
+              <input type="date" id="trip-return" class="form-control" required>
+              <div class="invalid-feedback" id="trip-return-error"></div>
+            </div>
+          </div>
+
+          <!-- Travelers & Budget -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="trip-travelers">Number of Travelers <span class="req">*</span></label>
+              <input type="number" id="trip-travelers" class="form-control" min="1" max="100" value="1" required>
+              <div class="form-hint">Must be at least 1 traveler.</div>
+              <div class="invalid-feedback" id="trip-travelers-error"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="trip-budget">Total Budget in INR (₹) <span class="req">*</span></label>
+              <input type="number" id="trip-budget" class="form-control" min="0" step="500" placeholder="e.g. 25000" required>
+              <div class="form-hint">Total estimated budget for the entire group.</div>
+              <div class="invalid-feedback" id="trip-budget-error"></div>
+            </div>
+          </div>
+
+          <!-- Travel Preference -->
+          <div class="form-group">
+            <label for="trip-preference">Primary Travel Preference</label>
+            <select id="trip-preference" class="form-control">
+              <option value="Relaxation">Relaxation &amp; Leisure</option>
+              <option value="Adventure">Adventure &amp; Sports</option>
+              <option value="Nature">Nature &amp; Scenic Landscapes</option>
+              <option value="Culture">Culture, History &amp; Heritage</option>
+              <option value="Shopping">Shopping &amp; Local Markets</option>
+              <option value="Food">Food &amp; Culinary Experience</option>
+            </select>
+          </div>
+
+          <!-- Submit Actions -->
+          <div style="margin-top: 30px; display: flex; gap: 14px; justify-content: flex-end;">
+            <a href="my-trips.html" class="btn btn-secondary">Cancel</a>
+            <button type="submit" id="trip-submit-btn" class="btn btn-primary btn-lg">
+              <span id="btn-text">Generate Itinerary &amp; Trip</span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <p>&copy; 2026 TravelMate. All rights reserved. Plain HTML, CSS, JavaScript &amp; Spring Boot Architecture.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/create-trip.js"></script>
+</body>
+</html>
