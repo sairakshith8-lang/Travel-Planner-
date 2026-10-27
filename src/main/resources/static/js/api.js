@@ -6,7 +6,7 @@
 const BACKEND_URL = window.API_BASE_URL || localStorage.getItem('TRAVELMATE_API_URL') || '';
 const API_BASE = BACKEND_URL ? `${BACKEND_URL.replace(/\/$/, '')}/api` : '/api';
 
-// Initial Mock Database for static deployments (e.g. Vercel)
+// Initial Mock Destinations catalog
 const STATIC_DESTINATIONS = [
   {
     id: 1,
@@ -130,14 +130,30 @@ const STATIC_DESTINATIONS = [
   }
 ];
 
+// Helper to access registered users database in localStorage
+function getRegisteredUsers() {
+  const defaultList = [
+    { id: 1, name: "Aarav Sharma", email: "demo@travelmate.com", password: "password123" }
+  ];
+  const stored = localStorage.getItem('TM_USERS_DB');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {}
+  }
+  localStorage.setItem('TM_USERS_DB', JSON.stringify(defaultList));
+  return defaultList;
+}
+
 // Local fallback store initialization
 function initLocalStore() {
   if (!localStorage.getItem('TM_INITIALIZED')) {
-    const defaultUser = { id: 1, name: "Aarav Sharma", email: "demo@travelmate.com" };
-    localStorage.setItem('TM_USER', JSON.stringify(defaultUser));
-    
+    // Note: Do NOT auto-login as Aarav! User starts as unauthenticated guest.
     const sampleTrip = {
       id: 1,
+      userId: 1,
+      userEmail: "demo@travelmate.com",
       tripName: "Goa Coastal Getaway 2026",
       source: "Mumbai",
       destination: "Goa",
@@ -207,25 +223,65 @@ const API = {
     const method = options.method || 'GET';
     const body = options.body ? JSON.parse(options.body) : {};
 
-    // Auth Me
+    // Auth Me - Get Current User
     if (endpoint === '/auth/me') {
       const user = JSON.parse(localStorage.getItem('TM_USER') || 'null');
-      if (user) return { success: true, message: "Demo authenticated", data: user };
+      if (user && user.name) {
+        return { success: true, message: "Authenticated", data: user };
+      }
       throw new Error("Not logged in");
     }
 
     // Login
     if (endpoint === '/auth/login') {
-      const user = { id: 1, name: "Aarav Sharma", email: body.email || "demo@travelmate.com" };
-      localStorage.setItem('TM_USER', JSON.stringify(user));
-      return { success: true, message: "Logged in successfully.", data: user };
+      const users = getRegisteredUsers();
+      const cleanEmail = (body.email || '').trim().toLowerCase();
+      let user = users.find(u => u.email.toLowerCase() === cleanEmail);
+
+      if (!user) {
+        // If not explicitly registered, derive name from email cleanly (e.g. 'rakshith' -> 'Rakshith')
+        let rawName = cleanEmail.split('@')[0] || 'Explorer';
+        let derivedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+        user = {
+          id: Date.now(),
+          name: derivedName,
+          email: cleanEmail,
+          password: body.password || "password123"
+        };
+        users.push(user);
+        localStorage.setItem('TM_USERS_DB', JSON.stringify(users));
+      }
+
+      const sessionUser = { id: user.id, name: user.name, email: user.email };
+      localStorage.setItem('TM_USER', JSON.stringify(sessionUser));
+      return { success: true, message: `Welcome back, ${sessionUser.name}!`, data: sessionUser };
     }
 
     // Register
     if (endpoint === '/auth/register') {
-      const user = { id: Date.now(), name: body.name || "Explorer", email: body.email };
-      localStorage.setItem('TM_USER', JSON.stringify(user));
-      return { success: true, message: "Registered successfully.", data: user };
+      const users = getRegisteredUsers();
+      const cleanEmail = (body.email || '').trim().toLowerCase();
+      const rawName = (body.name || '').trim();
+      const name = rawName ? (rawName.charAt(0).toUpperCase() + rawName.slice(1)) : 'Explorer';
+
+      let user = users.find(u => u.email.toLowerCase() === cleanEmail);
+      if (user) {
+        user.name = name;
+        user.password = body.password;
+      } else {
+        user = {
+          id: Date.now(),
+          name: name,
+          email: cleanEmail,
+          password: body.password || "password123"
+        };
+        users.push(user);
+      }
+      localStorage.setItem('TM_USERS_DB', JSON.stringify(users));
+
+      const sessionUser = { id: user.id, name: user.name, email: user.email };
+      localStorage.setItem('TM_USER', JSON.stringify(sessionUser));
+      return { success: true, message: `Registration successful! Welcome to TravelMate, ${sessionUser.name}.`, data: sessionUser };
     }
 
     // Logout
@@ -241,27 +297,42 @@ const API = {
 
     // Trips list
     if (endpoint.startsWith('/trips') && method === 'GET') {
-      const trips = JSON.parse(localStorage.getItem('TM_TRIPS') || '[]');
+      const currentUser = JSON.parse(localStorage.getItem('TM_USER') || 'null');
+      let allTrips = JSON.parse(localStorage.getItem('TM_TRIPS') || '[]');
       
       // If single trip GET /trips/{id}
       const match = endpoint.match(/\/trips\/(\d+)/);
       if (match) {
         const id = parseInt(match[1], 10);
-        const trip = trips.find(t => t.id === id) || trips[0];
-        return { success: true, message: "Trip details", data: trip };
+        const trip = allTrips.find(t => t.id === id) || allTrips[0];
+        if (trip) return { success: true, message: "Trip details", data: trip };
+        throw new Error("Trip not found");
       }
 
-      return { success: true, message: "Trips retrieved", data: trips };
+      // Filter trips for current user if logged in
+      let userTrips = allTrips;
+      if (currentUser) {
+        userTrips = allTrips.filter(t => t.userId === currentUser.id || t.userEmail === currentUser.email);
+        // If it's a newly logged in user with 0 trips, do not leak demo user's trip
+        if (userTrips.length === 0 && currentUser.email !== 'demo@travelmate.com') {
+          userTrips = [];
+        }
+      }
+
+      return { success: true, message: "Trips retrieved", data: userTrips };
     }
 
     // Create Trip
     if (endpoint === '/trips' && method === 'POST') {
+      const currentUser = JSON.parse(localStorage.getItem('TM_USER') || 'null') || { id: Date.now(), name: "Traveler", email: "user@travelmate.com" };
       const trips = JSON.parse(localStorage.getItem('TM_TRIPS') || '[]');
       const newId = Date.now();
       const budget = body.budget || 20000;
       
       const newTrip = {
         id: newId,
+        userId: currentUser.id,
+        userEmail: currentUser.email,
         tripName: body.tripName,
         source: body.source,
         destination: body.destination,
