@@ -1,0 +1,8 @@
+{
+  "name": "travelmate-planner",
+  "version": "1.0.0",
+  "description": "TravelMate - Modern Full-Stack Travel Planner Web Application",
+  "scripts": {
+    "build": "echo 'Static frontend assets are pre-built in src/main/resources/static'"
+  }
+}
